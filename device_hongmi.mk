@@ -90,7 +90,7 @@ PRODUCT_PACKAGES += \
 	wlan_loader \
 	wlan_cu \
 	wpa_supplicant \
-	audio.r_submix.default \
+	libaudio.r_submix.default \
 	libblisrc \
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 #$(call inherit-product, build/target/product/full.mk)
