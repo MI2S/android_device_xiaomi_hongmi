@@ -2,7 +2,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # The gps config appropriate for this device
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
-
+$(call inherit-product-if-exists, vendor/google/gapps.mk)
 $(call inherit-product-if-exists, vendor/xiaomi/hongmi/hongmi-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/xiaomi/hongmi/overlay
@@ -35,13 +35,13 @@ PRODUCT_COPY_FILES += \
 
 
 #Copy all root prebuilt files.
-PRODUCT_COPY_FILES += $(shell test -d $(device_path)/root/ &&  \
-	find $(device_path)/root/ -type f \
+PRODUCT_COPY_FILES += $(shell test -d $(LOCAL_PATH)/root/ &&  \
+	find $(LOCAL_PATH)/root/ -type f \
 	-printf '%p:root/%P ')
 
 #Copy all system prebuilt files.
-PRODUCT_COPY_FILES += $(shell test -d $(device_path)/prebuilt/ &&  \
-	find $(device_path)/prebuilt/ -type f \
+PRODUCT_COPY_FILES += $(shell test -d $(LOCAL_PATH)/prebuilt/ &&  \
+	find $(LOCAL_PATH)/prebuilt/ -type f \
 	-printf '%p:system/%P ')
 
 #ADDITIONAL_DEFAULT_PROPERTIES 
@@ -86,10 +86,14 @@ PRODUCT_PROPERTY_OVERRIDES := \
 	wifi.interface=wlan0 \
 	wifi.tethering.interface=ap0
 
-PRODUCT_PACKAGES += wlan_loader wlan_cu wpa_supplicant
-
+PRODUCT_PACKAGES += \
+	wlan_loader \
+	wlan_cu \
+	wpa_supplicant \
+	audio.r_submix.default \
+	libblisrc \
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
-$(call inherit-product, build/target/product/full.mk)
+#$(call inherit-product, build/target/product/full.mk)
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_hongmi
